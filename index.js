@@ -38,7 +38,8 @@ var mailOptions = {
 
 var html = fs.readFileSync('base.html','utf8')
 mailOptions.html += html;
-mailOptions.html += `<h2>Read ` + monthName + ` stories</h2><article class="clearfix">`;
+mailOptions.html += `<h1>Read ` + monthName + ` stories</h1><article class="clearfix">`;
+mailOptions.html += `<table style="width: 100%; border-collapse: collapse; border-bottom: rgb(7, 41, 115); padding: 0px;" data-ogsb="rgb(255, 255, 255)"><tbody><tr><td style="width: 100%; border-bottom: 2px solid rgb(7, 41, 115); padding-bottom: 10px;" data-ogsb="rgb(255, 255, 255)"></td></tr></tbody></table>`;
 
 (async () => {
     const browser = await puppeteer.launch();
@@ -62,16 +63,22 @@ mailOptions.html += `<h2>Read ` + monthName + ` stories</h2><article class="clea
 
         description[i] = description[i].replace("\n                        ", "");
         description[i] = description[i].replace("\n", "");
+        description[i] = description[i].trim();
 
         console.log(date[i]);
         console.log(title[i]);
         console.log(description[i]);
-        if (i != 9 && dateFormat[i+1].substring(5,7) != firstNewsMonth) console.log();
         
         mailOptions.html += `<p class="news--date" itemprop="startDate" content="2020-07-31">${date[i]}</p>`
-        mailOptions.html += `<h3 itemprop="name"><a href="${url.slice(0,17)}${href[i]}" itemprop="url">${title[i]}</a></h3>`
+        mailOptions.html += `<h2 itemprop="name">${title[i]}</h2>`
         mailOptions.html += `<img src="${url.slice(0,17)}${imgLink[i]}" class="image--float-right" itemprop="image">`
-        mailOptions.html += `<p class="news--listing__description" itemprop="articleBody">${description[i]}</p></article>`
+        mailOptions.html += `<p class="news--listing__description" itemprop="articleBody">${description[i]}. <a href="${url.slice(0,17)}${href[i]}" itemprop="url">Read more...</a></p></article>`
+
+        if (i != 9 && dateFormat[i+1].substring(5,7) === firstNewsMonth)
+        {
+            console.log();
+            mailOptions.html += `<table style="width: 100%; border-collapse: collapse; border-bottom: rgb(7, 41, 115); padding: 0px;" data-ogsb="rgb(255, 255, 255)"><tbody><tr><td style="width: 100%; border-bottom: 2px solid rgb(7, 41, 115); padding-bottom: 10px;" data-ogsb="rgb(255, 255, 255)"></td></tr></tbody></table>`;
+        }
     }
 
     if(dateFormat[9].substring(5,7) === firstNewsMonth)
@@ -108,16 +115,22 @@ async function NextPage(page, firstNewsMonth) {
 
         description[i] = description[i].replace("\n                        ", "");
         description[i] = description[i].replace("\n", "");
+        description[i] = description[i].trim();
 
         console.log(date[i]);
         console.log(title[i]);
         console.log(description[i]);
-        if (i != 9 && dateFormat[i+1].substring(5,7) != firstNewsMonth) console.log();
         
         mailOptions.html += `<p class="news--date" itemprop="startDate" content="2020-07-31">${date[i]}</p>`
-        mailOptions.html += `<h3 itemprop="name"><a href="${url.slice(0,17)}${href[i]}" itemprop="url">${title[i]}</a></h3>`
+        mailOptions.html += `<h2 itemprop="name">${title[i]}</h2>`
         mailOptions.html += `<img src="${url.slice(0,17)}${imgLink[i]}" class="image--float-right" itemprop="image">`
-        mailOptions.html += `<p class="news--listing__description" itemprop="articleBody">${description[i]}</p></article>`
+        mailOptions.html += `<p class="news--listing__description" itemprop="articleBody">${description[i]}. <a href="${url.slice(0,17)}${href[i]}" itemprop="url">Read more...</a></p></article>`
+
+        if (i != 9 && dateFormat[i+1].substring(5,7) === firstNewsMonth)
+        {
+            console.log();
+            mailOptions.html += `<table style="width: 100%; border-collapse: collapse; border-bottom: rgb(7, 41, 115); padding: 0px;" data-ogsb="rgb(255, 255, 255)"><tbody><tr><td style="width: 100%; border-bottom: 2px solid rgb(7, 41, 115); padding-bottom: 10px;" data-ogsb="rgb(255, 255, 255)"></td></tr></tbody></table>`;
+        }
     }
 
     if(dateFormat[9].substring(5,7) === firstNewsMonth)
