@@ -29,9 +29,8 @@ month[10] = "November";
 month[11] = "December";
 var monthName = month[date.getMonth()];
 
-const getDaysInMonth = date =>
-  new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-var numberOfDaysInCurrentMonth = getDaysInMonth(new Date(date.getFullYear(), date.getMonth()))
+const getDaysInMonth = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+var numberOfDaysInCurrentMonth = getDaysInMonth(new Date(date.getFullYear(), date.getMonth()));
 
 if (date.getDate() !== numberOfDaysInCurrentMonth) return;
 
