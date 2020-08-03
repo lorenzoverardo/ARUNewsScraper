@@ -29,6 +29,12 @@ month[10] = "November";
 month[11] = "December";
 var monthName = month[date.getMonth()];
 
+const getDaysInMonth = date =>
+  new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+var numberOfDaysInCurrentMonth = getDaysInMonth(new Date(date.getFullYear(), date.getMonth()))
+
+if (date.getDate() !== numberOfDaysInCurrentMonth) return;
+
 var mailOptions = {
     from: data.sender,
     to: data.receiver,
@@ -108,11 +114,17 @@ async function NextPage(page, firstNewsMonth) {
     const date = await page.evaluate(() => Array.from(document.querySelectorAll('p[class=news--date]'), element => element.textContent));
     const dateFormat = await page.evaluate(() => Array.from(document.querySelectorAll('p[class=news--date]'), element => element.getAttribute('content')));
     const href = await page.evaluate(() => Array.from(document.querySelectorAll('a[itemprop=url]'), element => element.getAttribute('href')));
+    const imgLink = await page.evaluate(() => Array.from(document.querySelectorAll('img[class=image--float-right]'), element => element.getAttribute('src')));
     
     for (i = 0; i < 10; i++)
     {
         if(dateFormat[i].substring(5,7) != firstNewsMonth) break;
-
+        else if (i === 0)
+        {
+            console.log();
+            mailOptions.html += `<table style="width: 100%; border-collapse: collapse; border-bottom: rgb(7, 41, 115); padding: 0px;" data-ogsb="rgb(255, 255, 255)"><tbody><tr><td style="width: 100%; border-bottom: 2px solid rgb(7, 41, 115); padding-bottom: 10px;" data-ogsb="rgb(255, 255, 255)"></td></tr></tbody></table>`;
+        }
+        
         description[i] = description[i].replace("\n                        ", "");
         description[i] = description[i].replace("\n", "");
         description[i] = description[i].trim();
