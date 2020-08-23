@@ -1,6 +1,6 @@
 {
     "email": "your@email.com",
     "password": "YourPassword",
-    "sender" : "Your Name <your@email.com>",
-    "receiver" : "receiver@email.com"
+    "sender": "Your Name <your@email.com>",
+    "receiver": "receiver@email.com"
 }
