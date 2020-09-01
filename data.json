@@ -1,4 +1,5 @@
 {
+    "service": "gmail, outlook, yahoo, ...",
     "email": "your@email.com",
     "password": "YourPassword",
     "sender": "Your Name <your@email.com>",

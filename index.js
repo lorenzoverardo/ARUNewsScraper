@@ -6,7 +6,7 @@ const data = require('./data.json');
 const url = "https://aru.ac.uk/news";
 
 var transporter = nodemailer.createTransport({
-    service: 'outlook',
+    service: data.service,
     auth: {
       user: data.email,
       pass: data.password
@@ -28,11 +28,12 @@ month[9] = "October";
 month[10] = "November";
 month[11] = "December";
 var monthName = month[date.getMonth()];
+var currentMonth = (date.getMonth() + 1).toString();
 
 const getDaysInMonth = date => new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
 var numberOfDaysInCurrentMonth = getDaysInMonth(new Date(date.getFullYear(), date.getMonth()));
 
-if (date.getDate() !== numberOfDaysInCurrentMonth) return;
+if (date.getDate() !== numberOfDaysInCurrentMonth) return console.log("Today's not the last day of the month (" + numberOfDaysInCurrentMonth + " " + monthName +")");
 
 var mailOptions = {
     from: data.sender,
@@ -61,6 +62,15 @@ mailOptions.html += `<table style="width: 100%; border-collapse: collapse; borde
     const imgLink = await page.evaluate(() => Array.from(document.querySelectorAll('img[class=image--float-right]'), element => element.getAttribute('src')));
 
     var firstNewsMonth = dateFormat[0].substring(5,7);
+
+    if (currentMonth >= 0 && currentMonth <= 9){
+        currentMonth = "0" + currentMonth;
+    }
+    
+    if (firstNewsMonth != currentMonth){
+        console.log("There are no news for " + monthName);
+        process.exit();
+    }
 
     for (i = 0; i < 10; i++)
     {
