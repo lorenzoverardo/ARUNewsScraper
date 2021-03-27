@@ -52,7 +52,7 @@ mailOptions.html += `<table style="width: 100%; border-collapse: collapse; borde
     const page = await browser.newPage();
     await page.goto(url, {waitUntil: 'networkidle2'});
 
-    await page.waitFor('body');
+    await page.waitForSelector("h1");
 
     const title = await page.evaluate(() => Array.from(document.querySelectorAll('a[itemprop=url]'), element => element.textContent));
     const description = await page.evaluate(() => Array.from(document.querySelectorAll('p[class=news--listing__description]'), element => element.textContent));
@@ -98,7 +98,7 @@ mailOptions.html += `<table style="width: 100%; border-collapse: collapse; borde
 
     if(dateFormat[9].substring(5,7) === firstNewsMonth)
     {
-        await page.click('[class="pagination__next-button"]');
+        await page.click('[class="location-anchor pagination__button pagination__button--next"]');
         await NextPage(page, firstNewsMonth);
     }
     
@@ -116,7 +116,7 @@ mailOptions.html += `<table style="width: 100%; border-collapse: collapse; borde
   
 async function NextPage(page, firstNewsMonth) {
     
-    await page.waitFor('body');
+    await page.waitForSelector("h1");
 
     const title = await page.evaluate(() => Array.from(document.querySelectorAll('a[itemprop=url]'), element => element.textContent));
     const description = await page.evaluate(() => Array.from(document.querySelectorAll('p[class=news--listing__description]'), element => element.textContent));
@@ -156,7 +156,7 @@ async function NextPage(page, firstNewsMonth) {
 
     if(dateFormat[9].substring(5,7) === firstNewsMonth)
     {
-        await page.click('[class="pagination__next-button"]');
+        await page.click('[class="location-anchor pagination__button pagination__button--next"]');
         await NextPage(page, firstNewsMonth);
     }
 }
