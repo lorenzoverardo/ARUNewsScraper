@@ -11,6 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "nodemailer": "^6.4.11",
-    "puppeteer": "^5.2.1"
+    "puppeteer": "^8.0.0"
   }
 }
