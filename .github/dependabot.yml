@@ -1,0 +1,14 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: nodemailer
+    versions:
+    - 6.5.0
+  - dependency-name: puppeteer
+    versions:
+    - 8.0.0
